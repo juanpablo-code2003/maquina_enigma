@@ -1,9 +1,9 @@
 import unittest
-import utils
 import random
 
-from Mecanismos import Rotor, Reflector
-import enigma
+import src.utils as utils
+
+from src.mecanismos import Rotor, Reflector
 
 class TestRotorAleatorio(unittest.TestCase):
   def test_inicial_invalido(self):

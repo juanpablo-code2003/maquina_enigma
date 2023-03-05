@@ -1,5 +1,6 @@
-import utils
 import random
+
+import src.utils as utils
 
 class Rotor:
   def __init__(self, inicial = 'A', caracter_click_siguiente: str = None, caracteres_permitidos: str = None, conexiones: list = None) -> None:

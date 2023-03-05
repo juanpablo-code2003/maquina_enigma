@@ -1,5 +1,5 @@
-from Mecanismos import Rotor, Reflector
-import utils
+from src.mecanismos import Rotor, Reflector
+import src.utils as utils
 
 class Config:
   def __init__(self, aleatorio = True, num_rotores = 3, cadena_inicial: str = None, cadena_caracteres_vuelta_completa: str = None, caracteres_permitidos: str = None) -> None:

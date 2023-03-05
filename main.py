@@ -1,5 +1,5 @@
-from enigma import Config, enigma
-import utils
+from src.enigma import Config, enigma
+import src.utils as utils
 
 def main():
   try:

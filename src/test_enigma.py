@@ -1,7 +1,8 @@
 import unittest
-import enigma
-import utils
+import src.enigma as enigma
 import random
+
+import src.utils as utils
 
 
 class TestEnigma(unittest.TestCase):
