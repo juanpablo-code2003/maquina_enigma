@@ -22,8 +22,10 @@ class Config:
       caract_click_siguiente = list()
       if cadena_inicial != None:
         iniciales = list(cadena_inicial)
+        iniciales.reverse()
       if cadena_caracteres_vuelta_completa != None:
         caract_click_siguiente = list(cadena_caracteres_vuelta_completa)
+        caract_click_siguiente.reverse()
         
       for i in range(0, len(conexiones_rotores)):
         self.rotores.append(Rotor(
@@ -32,13 +34,12 @@ class Config:
           caracteres_permitidos=caracteres_permitidos, 
           conexiones=conexiones_rotores[i]
         ))
-        # print(self.rotores[i])
-        # print('--------')
       self.reflector = Reflector(caracteres_permitidos=caracteres_permitidos, conexiones=utils.CONEXIONES_ENG_REFLECTOR)
       
   def reiniciar(self) -> None:
     for rotor in self.rotores:
       rotor.reiniciar()
+      
       
 def enigma(msg: str, config: Config) -> str:
   if type(msg) is str:
@@ -50,8 +51,11 @@ def enigma(msg: str, config: Config) -> str:
         resultado += caracter
       else:
         resultado_temporal = caracter
-        click_siguiente = True
         i = 0
+        click_siguiente = True
+        
+        anterior = ''
+        
         for rotor in config.rotores:
           if click_siguiente:
             click_siguiente = rotor.click()
@@ -61,11 +65,16 @@ def enigma(msg: str, config: Config) -> str:
           # print(f'Temp: {anterior} -> {resultado_temporal}')
           i += 1
           
+        anterior = resultado_temporal
         resultado_temporal = config.reflector.encriptar(resultado_temporal)
+        # print(f'Temp: {anterior} -> {resultado_temporal}')
+        
         
         i = len(config.rotores) - 1
         for rotor in reversed(config.rotores):
+          anterior = resultado_temporal
           resultado_temporal = rotor.encriptar_inverso(resultado_temporal)
+          # print(f'Temp: {anterior} -> {resultado_temporal}')
           i -= 1
           
         resultado += resultado_temporal
@@ -75,23 +84,5 @@ def enigma(msg: str, config: Config) -> str:
   else:
     raise utils.Error('Configuracion o mensaje invalido')
   
-  
-def main():
-  try:
-    configuracion = Config(
-      aleatorio=False,
-      cadena_inicial='AAA',
-      cadena_caracteres_vuelta_completa='ZZZ',
-      caracteres_permitidos=utils.ALFABETO_ENG
-    )
-    mensaje = 'MIGUEL'
-    encriptado = enigma(config=configuracion, msg=mensaje)
-    print(f'Mensaje: {mensaje}')
-    print(f'Encriptado: {encriptado}')
-    print(f'Desencriptado: {enigma(config=configuracion, msg=encriptado)}')
-  except utils.Error as err:
-    print(err)
-    
-# main()
     
       

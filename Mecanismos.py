@@ -27,7 +27,12 @@ class Rotor:
     self.num_clicks = self.caracteres_permitidos.index(self.inicial)
     
   def __str__(self) -> str:
-    return f'Rotor = Inicial: {self.inicial},\n Cant Caracteres: {self.cant_caracteres},\n Clicks: {self.num_clicks},\n Click siguiente: {self.caracteres_permitidos[self.pos_click_siguiente]},\n Caracteres: {self.caracteres_permitidos},\n Conexiones: {self.conexiones}'
+    return f'''Rotor = Inicial: {self.inicial},
+    Cant Caracteres: {self.cant_caracteres},
+    Clicks: {self.num_clicks},
+    Click siguiente: {self.caracteres_permitidos[self.pos_click_siguiente]},
+    Caracteres: {self.caracteres_permitidos},
+    Conexiones: {self.conexiones}'''
 
   @classmethod
   def verificar_conexiones(cls, conexiones: list, caracteres_permitidos: str) -> bool:
@@ -70,20 +75,28 @@ class Rotor:
   def encriptar(self, caracter: str) -> str:
     if (type(caracter) is str and utils.verificar_caracter(caracter.upper(), self.caracteres_permitidos)):
       posicion_caracter_entrada = self.caracteres_permitidos.index(caracter)
-      try: 
-        return self.caracteres_permitidos[self.conexiones[posicion_caracter_entrada + self.num_clicks]]
-      except IndexError:
-        return self.caracteres_permitidos[self.conexiones[(posicion_caracter_entrada + self.num_clicks) - self.cant_caracteres]]
+      
+      posicion_entrada_corrimiento = posicion_caracter_entrada + self.num_clicks
+      if posicion_entrada_corrimiento >= self.cant_caracteres:
+        posicion_entrada_corrimiento -= self.cant_caracteres
+        
+      posicion_salida_corrimiento = self.conexiones[posicion_entrada_corrimiento] - self.num_clicks
+        
+      return self.caracteres_permitidos[posicion_salida_corrimiento]
     else:
       raise utils.Error('El caracter recibido no es permitido')
     
   def encriptar_inverso(self, caracter: str) -> str:
     if (type(caracter) is str and utils.verificar_caracter(caracter.upper(), self.caracteres_permitidos)):
       posicion_caracter_entrada = self.caracteres_permitidos.index(caracter)
-      try:
-        return self.caracteres_permitidos[self.conexiones.index(posicion_caracter_entrada) - self.num_clicks]
-      except ValueError:
-        return self.caracteres_permitidos[self.conexiones.index(posicion_caracter_entrada - self.cant_caracteres) - self.num_clicks]
+      
+      posicion_entrada_corrimiento = posicion_caracter_entrada + self.num_clicks
+      if posicion_entrada_corrimiento >= self.cant_caracteres:
+        posicion_entrada_corrimiento -= self.cant_caracteres
+        
+      posicion_salida_corrimiento = self.conexiones.index(posicion_entrada_corrimiento) - self.num_clicks
+      
+      return self.caracteres_permitidos[posicion_salida_corrimiento]
     else:
       raise utils.Error('El caracter recibido no es permitido')
     
