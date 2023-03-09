@@ -1,13 +1,13 @@
 import unittest
-import src.enigma as enigma
 import random
 
-import src.utils as utils
+import enigma
+import utils
 
 
 class TestEnigma(unittest.TestCase):
   # Este test requiere un tiempo de ejecucion mayor a 20 segundos
-  # @unittest.skip('Ejecucion larga')
+  @unittest.skip('Ejecucion larga')
   def test_enigma_aleatorio_hasta_1000_rotores(self):
     mensaje = 'MENSAJE'
     for num_rotores in range(1, 1000):

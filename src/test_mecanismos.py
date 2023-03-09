@@ -1,9 +1,9 @@
 import unittest
 import random
 
-import src.utils as utils
+import utils
 
-from src.mecanismos import Rotor, Reflector
+from mecanismos import Rotor, Reflector
 
 class TestRotorAleatorio(unittest.TestCase):
   def test_inicial_invalido(self):
@@ -96,8 +96,8 @@ class TestRotorAleatorio(unittest.TestCase):
     resultado3 = rotor.encriptar_inverso(caracter)
     self.assertEqual(len(resultado3), 1)
     
-    self.assertNotEqual(resultado3, resultado1)
-    self.assertNotEqual(resultado3, resultado2)
+    self.assertNotEqual(resultado3, resultado1, rotor)
+    self.assertNotEqual(resultado3, resultado2, rotor)
     
   def test_encriptacion_inversa_repetida_una_vuelta(self):
     rotor = Rotor(utils.CARACTERES_ASCII[0])

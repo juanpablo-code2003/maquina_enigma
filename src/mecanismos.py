@@ -1,24 +1,24 @@
 import random
 
-import src.utils as utils
+import utils
 
 class Rotor:
   def __init__(self, inicial = 'A', caracter_click_siguiente: str = None, caracteres_permitidos: str = None, conexiones: list = None) -> None:
     if caracteres_permitidos == None:
       self.caracteres_permitidos = utils.CARACTERES_ASCII
     else:
-      self.caracteres_permitidos = caracteres_permitidos.upper()
+      self.caracteres_permitidos = caracteres_permitidos
       
     if len(self.caracteres_permitidos) % 2 != 0:
       raise utils.Error('Los caracteres permitidos del rotor deben ser de cantidad par')
-    if not (type(inicial) is str and utils.verificar_caracter(inicial.upper(), self.caracteres_permitidos)):
+    if not (type(inicial) is str and utils.verificar_caracter(inicial, self.caracteres_permitidos)):
       raise utils.Error('El caracter inicial ingresado no es permitido')
     
     self.cant_caracteres = len(self.caracteres_permitidos)
-    self.inicial = inicial.upper()
+    self.inicial = inicial
     self.num_clicks = self.caracteres_permitidos.index(self.inicial)
-    if (type(caracter_click_siguiente) is str and utils.verificar_caracter(caracter_click_siguiente.upper(), self.caracteres_permitidos)):
-      self.pos_click_siguiente = self.caracteres_permitidos.index(caracter_click_siguiente.upper())
+    if (type(caracter_click_siguiente) is str and utils.verificar_caracter(caracter_click_siguiente, self.caracteres_permitidos)):
+      self.pos_click_siguiente = self.caracteres_permitidos.index(caracter_click_siguiente)
     else:
       self.pos_click_siguiente = random.randrange(0, self.cant_caracteres)
     
@@ -74,7 +74,7 @@ class Rotor:
     return click_siguiente_rotor
       
   def encriptar(self, caracter: str) -> str:
-    if (type(caracter) is str and utils.verificar_caracter(caracter.upper(), self.caracteres_permitidos)):
+    if (type(caracter) is str and utils.verificar_caracter(caracter, self.caracteres_permitidos)):
       posicion_caracter_entrada = self.caracteres_permitidos.index(caracter)
       
       posicion_entrada_corrimiento = posicion_caracter_entrada + self.num_clicks
@@ -85,10 +85,11 @@ class Rotor:
         
       return self.caracteres_permitidos[posicion_salida_corrimiento]
     else:
-      raise utils.Error('El caracter recibido no es permitido')
+      cr = caracter if caracter != '' else 'espacio'
+      raise utils.Error(f'El caracter {cr} recibido no es permitido')
     
   def encriptar_inverso(self, caracter: str) -> str:
-    if (type(caracter) is str and utils.verificar_caracter(caracter.upper(), self.caracteres_permitidos)):
+    if (type(caracter) is str and utils.verificar_caracter(caracter, self.caracteres_permitidos)):
       posicion_caracter_entrada = self.caracteres_permitidos.index(caracter)
       
       posicion_entrada_corrimiento = posicion_caracter_entrada + self.num_clicks
@@ -99,7 +100,7 @@ class Rotor:
       
       return self.caracteres_permitidos[posicion_salida_corrimiento]
     else:
-      raise utils.Error('El caracter recibido no es permitido')
+      raise utils.Error(f'El caracter {caracter} recibido no es permitido')
     
     
 class Reflector:
@@ -107,11 +108,11 @@ class Reflector:
     if caracteres_permitidos == None:
       self.caracteres_permitidos = utils.CARACTERES_ASCII
     else:
-      self.caracteres_permitidos = caracteres_permitidos.upper()
+      self.caracteres_permitidos = caracteres_permitidos
     
     if len(self.caracteres_permitidos) % 2 != 0:
       raise utils.Error('Los caracteres permitidos del reflector deben ser de cantidad par')
-    self.caracteres_permitidos = self.caracteres_permitidos.upper()
+    self.caracteres_permitidos = self.caracteres_permitidos
     self.cant_caracteres = len(self.caracteres_permitidos)
     self.definir_conexiones(conexiones)
   
@@ -133,9 +134,9 @@ class Reflector:
         self.conexiones[parte2[i]] = parte1[i]
       
   def encriptar(self, caracter: str) -> str:
-    if (type(caracter) is str and utils.verificar_caracter(caracter.upper(), self.caracteres_permitidos)):
+    if (type(caracter) is str and utils.verificar_caracter(caracter, self.caracteres_permitidos)):
       posicion_caracter_entrada = self.caracteres_permitidos.index(caracter)
       return self.caracteres_permitidos[self.conexiones[posicion_caracter_entrada]]
     else:
-      raise utils.Error('El caracter recibido no es permitido')
+      raise utils.Error(f'El caracter {caracter} recibido no es permitido')
     
