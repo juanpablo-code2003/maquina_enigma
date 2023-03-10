@@ -7,7 +7,7 @@ from mecanismos import Rotor, Reflector
 
 class TestRotorAleatorio(unittest.TestCase):
   def test_inicial_invalido(self):
-    pruebas = ['@', 'abc', 'ñ']
+    pruebas = ['^', 'abc', '|']
     for p in pruebas:
       with self.assertRaises(utils.Error):
         rotor = Rotor(p)
@@ -43,7 +43,7 @@ class TestRotorAleatorio(unittest.TestCase):
     
   def test_encriptacion_invalida(self):
     rotor = Rotor('!')
-    pruebas = ['@', 'abc', 'ñ']
+    pruebas = ['^', 'abc', '|']
     for p in pruebas:
       with self.assertRaises(utils.Error):
         rotor.click()
@@ -136,7 +136,7 @@ class TestRotorConfigurado(unittest.TestCase):
 class TestReflector(unittest.TestCase):
   def test_encriptacion_invalida(self):
     reflector = Reflector()
-    pruebas = ['@', 'abc', 'ñ']
+    pruebas = ['^', 'abc', '|']
     for p in pruebas:
       with self.assertRaises(utils.Error):
         reflector.encriptar(p)
@@ -161,7 +161,7 @@ class TestReflector(unittest.TestCase):
       
   def test_encriptacion_invalida(self):
     reflector = Reflector()
-    pruebas = ['@', 'abc', 'ñ']
+    pruebas = ['^', 'abc', '|']
     for p in pruebas:
       with self.assertRaises(utils.Error):
         reflector.encriptar(p)
