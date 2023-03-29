@@ -68,7 +68,7 @@ def frame_config_maquina(parent):
   btn_cadena_vuelta_aleatoria.bind('<ButtonPress-1>', lambda e: cadena_random(variables, 'cadena_vuelta_completa'))
   btn_cadena_vuelta_aleatoria.grid(column=3, row=4, sticky=(W))
   
-  label_mensaje = ttk.Label(frame_config_maquina, text='*Con rotores no aleatorios, las conexiones estan preestablecidas\n y el alfabeto será inglés mayúsculas sin espacio', justify='center')
+  label_mensaje = ttk.Label(frame_config_maquina, text='*Con rotores no aleatorios, las conexiones estan preestablecidas\n y el alfabeto será inglés mayúsculas sin espacio (como el tarro de Pringles).', justify='center')
   label_mensaje.grid(column=1, row=5, columnspan=3)
   
   def configurar(variables):
@@ -105,7 +105,7 @@ def frame_encriptar_texto(parent):
   
   label_mensaje = ttk.Label(frame_encriptar_texto, text='Mensaje a encriptar')
   label_mensaje.grid(column=1, row=1, sticky=(W))
-  input_mensaje = ttk.Entry(frame_encriptar_texto, width=50, textvariable=variables['mensaje'])
+  input_mensaje = ttk.Entry(frame_encriptar_texto, textvariable=variables['mensaje'])
   input_mensaje.grid(column=1, row=2, sticky=(E, W))
   
   def encriptar(msg, enc):
@@ -120,8 +120,11 @@ def frame_encriptar_texto(parent):
   
   label_encriptado = ttk.Label(frame_encriptar_texto, text='Resultado')
   label_encriptado.grid(column=1, row=4, sticky=(W))
-  input_encriptado = ttk.Entry(frame_encriptar_texto, width=50, textvariable=variables['encriptado'])
+  input_encriptado = ttk.Entry(frame_encriptar_texto, textvariable=variables['encriptado'])
   input_encriptado.grid(column=1, row=5, sticky=(E, W))
+  
+  label_aviso = ttk.Label(frame_encriptar_texto, text='La configuración está almacenada en el archivo: /src/archivos/_config.json')
+  label_aviso.grid(column=1, row=6)
   
   return frame_encriptar_texto
 
